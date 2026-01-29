@@ -1,0 +1,16 @@
+{
+  "name": "flux-ai-pro",
+  "version": "14.0.0",
+  "description": "Flux AI Pro - AI增强版云平台AI图像生成器",
+  "main": "worker.js",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "start": "wrangler dev",
+    "dev": "wrangler dev"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240208.0",
+    "wrangler": "^3.0.0"
+  },
+  "dependencies": {}
+}

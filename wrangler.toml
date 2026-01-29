@@ -1,0 +1,103 @@
+# ============================================
+# Cloudflare Workers 配置文件
+# 项目: Flux AI Pro - NanoBanana Edition
+# 版本: 14.0.0 (AI增强版)
+# 更新: 2026-01-29
+# ============================================
+
+name = "flux-ai-pro"
+main = "worker.js"
+compatibility_date = "2024-12-01"
+
+# ============================================
+# KV 存储绑定 (NanoBanana 限流必需)
+# ⚠️ 请执行: npx wrangler kv:namespace create "FLUX_KV"
+# 然后将生成的 id 填入下方
+# ============================================
+[[kv_namespaces]]
+binding = "FLUX_KV"
+id = "65c2232e78044e749adb797599cb6ac8"
+
+# ============================================
+# Workers AI 绑定（用于中文自动翻译）
+# ============================================
+[ai]
+binding = "AI"
+
+# ============================================
+# R2 存储绑定（用于图像缓存）
+# ============================================
+[[r2_buckets]]
+binding = "IMAGE_CACHE"
+bucket_name = "flux-ai-images"
+
+# ============================================
+# D1 数据库绑定（用于请求日志和统计）
+# ============================================
+[[d1_databases]]
+binding = "DB"
+database_name = "flux-ai-db"
+database_id = "your-database-id-here"
+
+# ============================================
+# 环境变量（非敏感）
+# ============================================
+[vars]
+WORKER_VERSION = "14.0.0"
+DEFAULT_MODEL = "flux"
+MAX_WIDTH = 2048
+MAX_HEIGHT = 2048
+MAX_TIMEOUT = 120000
+ENVIRONMENT = "production"
+CACHE_ENABLED = true
+CACHE_TTL = 3600
+# 新增：V13.0.0 环境变量
+PERFORMANCE_MODE = "enhanced"
+ENABLE_AI_ENHANCEMENT = true
+MAX_CONCURRENT_REQUESTS = 10
+REQUEST_QUEUE_SIZE = 50
+CONTENT_MODERATION_ENABLED = true
+# 新增：V14.0.0 环境变量
+AI_SMART_PROMPT_ANALYSIS = true
+AI_AUTO_QUALITY_SELECTION = true
+AI_STYLE_TRANSFER_ENABLED = true
+AI_BATCH_OPTIMIZATION = true
+AI_UPSCALING_ENABLED = true
+AI_FILTERING_ENABLED = true
+SMART_CACHE_STRATEGY = "aggressive"
+CACHE_PREDICTION_ENABLED = true
+PERFORMANCE_PROFILING_ENABLED = true
+ADVANCED_SECURITY_ENABLED = true
+DB_QUERY_OPTIMIZATION = true
+
+# ============================================
+# Secrets 通过 wrangler secret 命令设置
+# 🔐 推荐设置:
+# 1. POLLINATIONS_API_KEY (Pollinations)
+# 2. INFIP_API_KEY (Ghostbot/Infip)
+# 3. GEMINI_API_KEY (Google Gemini 3 Flash)
+# ============================================
+# 设置命令示例：
+# npx wrangler secret put POLLINATIONS_API_KEY
+# npx wrangler secret put INFIP_API_KEY
+# npx wrangler secret put GEMINI_API_KEY
+
+# ============================================
+# 开发配置
+# ============================================
+[dev]
+port = 8787
+local_protocol = "http"
+
+# ============================================
+# 路由配置（可选）
+# ============================================
+# routes = [
+#   "your-domain.com/*"
+# ]
+
+# ============================================
+# 环境配置示例
+# ============================================
+# [env.production]
+# [env.staging]
